@@ -48,7 +48,7 @@ public class Rectangle {
    */
   public boolean contains(final Point point) {
     // TODO Insert code for assignment 5.1.a
-	  final float threshold = (float) 0.0000001;
+	  final float threshold = (float) 0.000001;
 	  if(point.x > x && point.x < x + width && point.y > y && point.y < y + height 
 			  || Math.abs(point.x - this.x) < threshold && Math.abs(point.y - this.y) < threshold 
 			  ||Math.abs(this.x + width - point.x) < threshold 
@@ -65,7 +65,8 @@ public class Rectangle {
   public boolean intersects(final Rectangle rectangle) {
     // TODO Insert code for assignment 5.1.b
 	  if(rectangle.contains(new Point(this.x, this.y)) ||
-			  rectangle.contains(new Point(this.x + width, this.y +height)))
+			  rectangle.contains(new Point(this.x + width, this.y +height))||
+			  this.contains(new Point(rectangle.x, rectangle.y)))
 		  return true;
 	  else
 		  return false;
