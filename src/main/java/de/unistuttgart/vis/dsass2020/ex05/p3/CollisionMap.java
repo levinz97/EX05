@@ -77,6 +77,18 @@ public class CollisionMap {
    */
   private Set<Rectangle> getCollisionCandidates(Rectangle rectangle) throws CollisionMapOutOfBoundsException {
     // TODO Insert code for assignment 5.3.b
+	  Set<Rectangle> result = new HashSet<>();
+	  Rectangle newRectangle = new Rectangle(this.transformX(rectangle.x),
+				 this.transformY(rectangle.y),rectangle.width,rectangle.height);
+	  for (int y = 0; y < map[0].length; ++y) {
+	      for (int x = 0; x < map.length; ++x) {
+	    			  if(newRectangle.intersects(new Rectangle(y,x,1,1))) {
+	    				  for(Rectangle content : map[y][x]) 
+	    					  result.add(content);
+	    			  }  
+	      }
+	  }  
+	  return result;
   }
 
   /**
@@ -87,6 +99,16 @@ public class CollisionMap {
    */
   private void fillCollisionMap(Set<Rectangle> rectangles) throws CollisionMapOutOfBoundsException {
     // TODO Insert code for assignment 5.3.a
+	   for (int y = 0; y < map[0].length; ++y) {
+		      for (int x = 0; x < map.length; ++x) {
+		    	  for(Rectangle rectangle : rectangles) {
+		    			 Rectangle newRectangle = new Rectangle(this.transformX(rectangle.x),
+		    					 this.transformY(rectangle.y),rectangle.width,rectangle.height);
+		    			  if(newRectangle.intersects(new Rectangle(y,x,1,1)))
+		    				  map[y][x].add(rectangle);
+		    	  }
+		      }
+	   }  
   }
 
   /**
@@ -127,9 +149,14 @@ public class CollisionMap {
    * @param rectangle
    * @return true iff the given rectangle intersects one of the rectangles in the
    *         collision map.
+ * @throws CollisionMapOutOfBoundsException 
    */
-  public boolean collide(Rectangle rectangle) {
+  public boolean collide(Rectangle rectangle) throws CollisionMapOutOfBoundsException {
     // TODO Insert code for assignment 5.3.c
+	 if(this.getCollisionCandidates(rectangle).size() > 0)
+		 return true;
+	 else 
+		 return false;
   }
 
   /**
